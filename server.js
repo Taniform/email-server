@@ -14,10 +14,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send-email", (req, expressRes) => {
-  const { subject, content, html_content, from } = req.body;
+  const { subject, content, html_content, to } = req.body;
 
   // 2. Perform basic validation
-  if (!subject || !content || !from) {
+  if (!subject || !content || !to) {
     return expressRes.status(400).json({
       error:
         "Missing required fields: 'subject' and 'content' are required in the request body.",
@@ -30,8 +30,8 @@ app.post("/send-email", (req, expressRes) => {
 
   // 3. Setup body using the extracted payload data
   const sendData = {
-    from: from, //user email
-    to: "contact@mansonprimehusky.com",
+    from: "contact@mansonprimehusky.com", //user email
+    to: to,
     subject: subject, // Dynamically set
     content: content, // Dynamically set (plain text)
     // Optional: Use html_content from the payload, or generate a simple HTML version
